@@ -3,5 +3,7 @@ export const theme = {
     cerulean: "#1a759f",
     white: "#fff",
     black: "#000",
+    grey: "grey",
+    lightGrey: "#eee",
   },
 };
