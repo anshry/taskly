@@ -1,3 +1,5 @@
+import { Entypo } from "@expo/vector-icons";
+import AntDesign from "@expo/vector-icons/AntDesign";
 import { Alert, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 import { theme } from "../theme";
@@ -35,23 +37,31 @@ export function ShoppingListItem({ name, isCompleted }: Props) {
         isCompleted ? styles.completedContainer : undefined,
       ]}
     >
-      <Text
-        style={[
-          styles.itemText,
-          isCompleted ? styles.completedText : undefined,
-        ]}
-      >
-        {name}
-      </Text>
+      <View style={styles.row}>
+        <Entypo
+          name={isCompleted ? "check" : "circle"}
+          size={24}
+          color={isCompleted ? theme.colors.grey : theme.colors.cerulean}
+        />
+        <Text
+          style={[
+            styles.itemText,
+            isCompleted ? styles.completedText : undefined,
+          ]}
+        >
+          {name}
+        </Text>
+      </View>
       <TouchableOpacity
-        style={[
-          styles.button,
-          isCompleted ? styles.completedButton : undefined,
-        ]}
+        hitSlop={20}
         onPress={!isCompleted ? handleDelete : undefined}
         activeOpacity={0.8}
       >
-        <Text style={styles.buttonText}>Delete</Text>
+        <AntDesign
+          name="closecircle"
+          size={24}
+          color={isCompleted ? theme.colors.grey : theme.colors.red}
+        />
       </TouchableOpacity>
     </View>
   );
@@ -63,26 +73,19 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     paddingVertical: 16,
-    paddingHorizontal: 8,
-    borderBottomColor: "#1a759f",
+    paddingHorizontal: 18,
+    borderBottomColor: theme.colors.cerulean,
     borderBottomWidth: 1,
   },
   completedContainer: {
     backgroundColor: theme.colors.lightGrey,
     borderBottomColor: theme.colors.lightGrey,
   },
-  itemText: { fontSize: 18, fontWeight: "200" },
+  itemText: { fontSize: 18, fontWeight: "200", marginLeft: 8, flex: 1 },
   completedText: {
     textDecorationLine: "line-through",
     textDecorationColor: theme.colors.grey,
     color: theme.colors.grey,
   },
-  button: { backgroundColor: theme.colors.black, padding: 8, borderRadius: 6 },
-  completedButton: { backgroundColor: theme.colors.grey },
-  buttonText: {
-    color: theme.colors.white,
-    fontWeight: "bold",
-    textTransform: "uppercase",
-    letterSpacing: 1,
-  },
+  row: { flexDirection: "row", alignItems: "center", flex: 1 },
 });
