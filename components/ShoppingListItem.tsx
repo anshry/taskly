@@ -1,15 +1,28 @@
-import { Entypo } from "@expo/vector-icons";
-import AntDesign from "@expo/vector-icons/AntDesign";
-import { Alert, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Entypo, Feather } from "@expo/vector-icons";
+import {
+  Alert,
+  Pressable,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 
 import { theme } from "../theme";
 
 type Props = {
   name: string;
   isCompleted?: boolean;
+  onDelete: () => void;
+  onToggleComplete: () => void;
 };
 
-export function ShoppingListItem({ name, isCompleted }: Props) {
+export function ShoppingListItem({
+  name,
+  isCompleted,
+  onDelete,
+  onToggleComplete,
+}: Props) {
   const handleDelete = () => {
     Alert.alert(
       `Are you sure you want to delete ${name}?`,
@@ -18,7 +31,7 @@ export function ShoppingListItem({ name, isCompleted }: Props) {
         {
           text: "Yes",
           onPress: () => {
-            console.log("pressed");
+            onDelete();
           },
           style: "destructive",
         },
@@ -31,11 +44,12 @@ export function ShoppingListItem({ name, isCompleted }: Props) {
   };
 
   return (
-    <View
+    <Pressable
       style={[
         styles.itemContainer,
         isCompleted ? styles.completedContainer : undefined,
       ]}
+      onPress={onToggleComplete}
     >
       <View style={styles.row}>
         <Entypo
@@ -57,13 +71,13 @@ export function ShoppingListItem({ name, isCompleted }: Props) {
         onPress={!isCompleted ? handleDelete : undefined}
         activeOpacity={0.8}
       >
-        <AntDesign
-          name="closecircle"
+        <Feather
+          name="trash"
           size={24}
           color={isCompleted ? theme.colors.grey : theme.colors.red}
         />
       </TouchableOpacity>
-    </View>
+    </Pressable>
   );
 }
 
